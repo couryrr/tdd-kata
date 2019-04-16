@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 public class StringCalculator {
 
-	private static final String BASE_DELIMITOR_GROUP = "[\\n,]";
+	private static final String BASE_DELIMITER_GROUP = "[\\n,]";
 
-	private static final String DELIMITOR_INDICATOR = "//";
+	private static final String DELIMITER_INDICATOR = "//";
 
-	private static final String DELIMITOR_GROUP_START = "[";
-	private static final String DELIMITOR_GROUP_END = "]";
+	private static final String DELIMITER_GROUP_START = "[";
+	private static final String DELIMITER_GROUP_END = "]";
 
-	private static final String DELIMITOR_END = "\n";
+	private static final String DELIMITER_END = "\n";
 
 	private static final int ADD_LIMIT = 1000;
 
@@ -34,11 +34,11 @@ public class StringCalculator {
 		int result = 0;
 		List<Integer> negatives = new ArrayList<Integer>();
 
-		String delimitor = getDelimitor(input);
+		String delimiter = getDelimiter(input);
 
-		String values = input.startsWith(DELIMITOR_INDICATOR) ? getValues(input) : input;
+		String values = input.startsWith(DELIMITER_INDICATOR) ? getValues(input) : input;
 
-		for (String value : split(values, delimitor)) {
+		for (String value : split(values, delimiter)) {
 			int num = parse(value);
 			if (num <= ADD_LIMIT) {
 				result += num;
@@ -55,20 +55,20 @@ public class StringCalculator {
 		return result;
 	}
 
-	public static String[] split(String input, String delimitor) {
-		return input.split(delimitor);
+	public static String[] split(String input, String delimiter) {
+		return input.split(delimiter);
 	}
 
-	public static String getDelimitor(String input) {
-		String delimitor = "";
-		if (input.startsWith(DELIMITOR_INDICATOR)) {
-			Pattern regex = Pattern.compile("\\"+ DELIMITOR_GROUP_START +"(.*?)\\"+ DELIMITOR_GROUP_END);
+	public static String getDelimiter(String input) {
+		String delimiter = "";
+		if (input.startsWith(DELIMITER_INDICATOR)) {
+			Pattern regex = Pattern.compile("\\"+ DELIMITER_GROUP_START +"(.*?)\\"+ DELIMITER_GROUP_END);
 			Matcher matcher = regex.matcher(input);
 			while (matcher.find()) {// Finds Matching Pattern in String
-				delimitor += "|\\Q" + matcher.group(1) + "\\E";
+				delimiter += "|\\Q" + matcher.group(1) + "\\E";
 			}
 		}
-		return BASE_DELIMITOR_GROUP + delimitor;
+		return BASE_DELIMITER_GROUP + delimiter;
 	}
 
 	public static int parse(String value) {
@@ -83,8 +83,9 @@ public class StringCalculator {
 	}
 
 	public static String getValues(String input) {
-		return input.substring(input.indexOf(DELIMITOR_GROUP_END + DELIMITOR_END) + DELIMITOR_GROUP_END.length()
-				+ DELIMITOR_END.length());
+		//Not a huge fan but allows for the use of \n as a delimiter
+		return input.substring(input.indexOf(DELIMITER_GROUP_END + DELIMITER_END) + DELIMITER_GROUP_END.length()
+				+ DELIMITER_END.length());
 	}
 
 }

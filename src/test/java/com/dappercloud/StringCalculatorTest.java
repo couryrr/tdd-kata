@@ -211,26 +211,26 @@ public class StringCalculatorTest {
 	}
 
 	@Test
-	public void checkForDelimitorTest() {
-		String result = StringCalculator.getDelimitor("//[;]\n1;2");
+	public void checkForDelimiterTest() {
+		String result = StringCalculator.getDelimiter("//[;]\n1;2");
 		assertEquals("Value should be ;", "[\\n,]|\\Q;\\E", result);
 	}
 
 	@Test
-	public void checkForLongDelimitorTest() {
-		String result = StringCalculator.getDelimitor("//[--]\n1--2");
+	public void checkForLongDelimiterTest() {
+		String result = StringCalculator.getDelimiter("//[--]\n1--2");
 		assertEquals("Value should be --", "[\\n,]|\\Q--\\E", result);
 	}
 
 	@Test
-	public void checkForNoDelimitorTest() {
-		String result = StringCalculator.getDelimitor("1,2");
+	public void checkForNoDelimiterTest() {
+		String result = StringCalculator.getDelimiter("1,2");
 		assertEquals("Value should be base", "[\\n,]", result);
 	}
 	
 	@Test
-	public void checkForTwoDelimitorTest() {
-		String result = StringCalculator.getDelimitor("//[--][***]\\n1,2");
+	public void checkForTwoDelimiterTest() {
+		String result = StringCalculator.getDelimiter("//[--][***]\\n1,2");
 		assertEquals("Value should be base", "[\\n,]|\\Q--\\E|\\Q***\\E", result);
 	}
 
