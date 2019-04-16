@@ -37,10 +37,17 @@ public class StringCalculatorTest {
 		int result = StringCalculator.addString(",2");
 		assertEquals("String input ,2 is 2", 2, result);
 	}
+	
 	@Test
 	public void addTwoSecondEmptyStringTest() {
 		int result = StringCalculator.addString("5,");
 		assertEquals("String input 5, is 5", 5, result);
+	}
+	
+	@Test
+	public void addMultipleNumbersStringTest() {
+		int result = StringCalculator.addString("5,2,3");
+		assertEquals("String input 5,2,3 is 10", 10, result);
 	}
 	
 	@Test
