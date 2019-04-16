@@ -11,13 +11,21 @@ public class StringCalculator {
 	 * (for an empty string it will return 0) 
 	 */
 	public static int addString(String input) {
-		if(!input.isBlank()) {
+		
 			if(input.contains(",")) {
+				//TODO: Split the input, parse ints and add
 				return 7;
 			}
-			return 5;
+			
+			return parse(input);
+	}
+	
+	public static int parse(String value) {
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return 0;
 		}
-		return 0;
 	}
 
 }

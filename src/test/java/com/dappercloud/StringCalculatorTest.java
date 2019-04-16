@@ -31,4 +31,16 @@ public class StringCalculatorTest {
 		int result = StringCalculator.addString("5,2");
 		assertEquals("String input 5,2 is 7", 7, result);
 	}
+	
+	@Test
+	public void parseEmptyTest() {
+		int result = StringCalculator.parse("");
+		assertEquals("String input blank is 0", 0, result);
+	}
+	
+	@Test
+	public void parseEmptyWhiteSpaceTest() {
+		int result = StringCalculator.parse(" ");
+		assertEquals("String input white space is 0", 0, result);
+	}
 }
