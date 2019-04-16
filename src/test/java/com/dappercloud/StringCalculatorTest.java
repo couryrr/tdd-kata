@@ -92,7 +92,7 @@ public class StringCalculatorTest {
 	}
 	
 	@Test
-	public void addWithNoNegatveNumbersNewLineAndCommaAndCustomStringTest(){
+	public void addWithNoNegatveNumbersNewLineCommaAndCustomStringTest(){
 		try {
 			int result = StringCalculator.addString("//[;]\n5,2\n3;2,3");
 			assertEquals("5+2+3+2+3", 15,result);
@@ -104,13 +104,13 @@ public class StringCalculatorTest {
 	
 	@Test
 	public void addSkips1001NumberTest() throws Exception {
-		int result = StringCalculator.addString("//[;][***]\n5,1001\n3***2,3");
+		int result = StringCalculator.addString("5,1001\n3\n2,3");
 		assertEquals("5+3+2+3", 13,result);
 	}
 	
 	@Test
 	public void addAllow1000NumbersTest() throws Exception {
-		int result = StringCalculator.addString("//[;]\n5,1000\n3;2,3");
+		int result = StringCalculator.addString("5,1000\n3,2,3");
 		assertEquals("5+1000+3+2+3", 1013,result);
 	}
 
@@ -226,6 +226,12 @@ public class StringCalculatorTest {
 	public void checkForNoDelimitorTest() {
 		String result = StringCalculator.getDelimitor("1,2");
 		assertEquals("Value should be base", "[\\n,]", result);
+	}
+	
+	@Test
+	public void checkForTwoDelimitorTest() {
+		String result = StringCalculator.getDelimitor("//[--][***]\\n1,2");
+		assertEquals("Value should be base", "[\\n,]|\\Q--\\E|\\Q***\\E", result);
 	}
 
 }
