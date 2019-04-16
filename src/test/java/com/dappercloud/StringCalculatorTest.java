@@ -50,6 +50,19 @@ public class StringCalculatorTest {
 		assertEquals("String input 5,2,3 is 10", 10, result);
 	}
 	
+	
+	@Test
+	public void addMultipleNumbersNewLineStringTest() {
+		int result = StringCalculator.addString("5\n2\n3");
+		assertEquals("String input 5,2,3 is 10", 10, result);
+	}
+	
+	@Test
+	public void addMultipleNumbersNewLineAndCommaStringTest() {
+		int result = StringCalculator.addString("5,2\n3");
+		assertEquals("String input 5,2,3 is 10", 10, result);
+	}
+	
 	@Test
 	public void parseEmptyTest() {
 		int result = StringCalculator.parse("");
@@ -109,6 +122,40 @@ public class StringCalculatorTest {
 		String[] result = StringCalculator.split("25,");
 		assertEquals("Two inputs will have a size of 1", 1, result.length);
 		assertEquals("Input[0] value will be it", "25", result[0]);
+	}
+	
+	@Test
+	public void splitMoreThanTwoStringTest() {
+		String[] result = StringCalculator.split("25,55,16");
+		assertEquals("Two inputs will have a size of 3", 3, result.length);
+		assertEquals("Input[0] value will be it", "25", result[0]);
+		assertEquals("Input[1] value will be it", "55", result[1]);
+		assertEquals("Input[2] value will be it", "16", result[2]);
+	}
+	
+	@Test
+	public void splitMoreThanTwoOneEmptyStringTest() {
+		String[] result = StringCalculator.split("25,,16");
+		assertEquals("Two inputs will have a size of 3", 3, result.length);
+		assertEquals("Input[0] value will be it", "25", result[0]);
+		assertEquals("Input[1] value will be it", "", result[1]);
+		assertEquals("Input[2] value will be it", "16", result[2]);
+	}
+	
+	@Test
+	public void splitWithNewLineStringTest() {
+		String[] result = StringCalculator.split("25\n16");
+		assertEquals("Two inputs will have a size of 2", 2, result.length);
+		assertEquals("Input[0] value will be it", "25", result[0]);
+		assertEquals("Input[1] value will be it", "16", result[1]);
+	}
+	@Test
+	public void splitWithNewLineAndCommaStringTest() {
+		String[] result = StringCalculator.split("25\n16,12");
+		assertEquals("Two inputs will have a size of 3", 3, result.length);
+		assertEquals("Input[0] value will be it", "25", result[0]);
+		assertEquals("Input[1] value will be it", "16", result[1]);
+		assertEquals("Input[2] value will be it", "12", result[2]);
 	}
 
 }
