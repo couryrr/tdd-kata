@@ -104,7 +104,7 @@ public class StringCalculatorTest {
 	
 	@Test
 	public void addSkips1001NumberTest() throws Exception {
-		int result = StringCalculator.addString("//[;]\n5,1001\n3;2,3");
+		int result = StringCalculator.addString("//[;][***]\n5,1001\n3***2,3");
 		assertEquals("5+3+2+3", 13,result);
 	}
 	

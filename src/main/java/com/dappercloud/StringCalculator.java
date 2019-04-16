@@ -2,6 +2,8 @@ package com.dappercloud;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
@@ -24,7 +26,7 @@ public class StringCalculator {
 	 *         The method can take up to two numbers, separated by commas, and will
 	 *         return their sum. for example “” or “1” or “1,2” as inputs. (for an
 	 *         empty string it will return 0)
-	 *         
+	 * 
 	 * @throws Exception - negative numbers are not allowed
 	 */
 	public static int addString(String input) throws Exception {
@@ -60,9 +62,11 @@ public class StringCalculator {
 	public static String getDelimitor(String input) {
 		String delimitor = "";
 		if (input.startsWith(DELIMITOR_INDICATOR)) {
-			delimitor = "|\\Q"
-					+ input.substring(input.indexOf(DELIMITOR_GROUP_START) + 1, input.indexOf(DELIMITOR_GROUP_END))
-					+ "\\E";
+			Pattern regex = Pattern.compile("\\"+ DELIMITOR_GROUP_START +"(.*?)\\"+ DELIMITOR_GROUP_END);
+			Matcher matcher = regex.matcher(input);
+			while (matcher.find()) {// Finds Matching Pattern in String
+				delimitor += "|\\Q" + matcher.group(1) + "\\E";
+			}
 		}
 		return BASE_DELIMITOR_GROUP + delimitor;
 	}
