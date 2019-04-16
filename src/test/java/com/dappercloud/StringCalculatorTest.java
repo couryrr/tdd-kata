@@ -64,6 +64,12 @@ public class StringCalculatorTest {
 	}
 	
 	@Test
+	public void addMultipleNumbersNewLineAndCommaAndCustomStringTest() {
+		int result = StringCalculator.addString("//;\n5,2\n3;2,3");
+		assertEquals("String input 5,2,3,2,3 is 15", 15, result);
+	}
+	
+	@Test
 	public void parseEmptyTest() {
 		int result = StringCalculator.parse("");
 		assertEquals("String input blank is 0", 0, result);
@@ -156,6 +162,24 @@ public class StringCalculatorTest {
 		assertEquals("Input[0] value will be it", "25", result[0]);
 		assertEquals("Input[1] value will be it", "16", result[1]);
 		assertEquals("Input[2] value will be it", "12", result[2]);
+	}
+	
+	@Test
+	public void checkForDelimitorTest() {
+		String result = StringCalculator.checkForDelimitor("//;\n1;2");
+		assertEquals("Value should be ;", ";", result);
+	}
+	
+	@Test
+	public void checkForLongDelimitorTest() {
+		String result = StringCalculator.checkForDelimitor("//--\n1--2");
+		assertEquals("Value should be --", "--", result);
+	}
+	
+	@Test
+	public void checkForNoDelimitorTest() {
+		String result = StringCalculator.checkForDelimitor("1,2");
+		assertEquals("Value should be blank", "", result);
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.dappercloud;
 
 public class StringCalculator {
+	
+	 private static final String DELIMITOR_INDICATOR = "//";
+	 private static final String DELIMITOR_END = "\n";
 
 	/**
 	 * @param input - String separated by commas
@@ -21,7 +24,16 @@ public class StringCalculator {
 	}
 
 	public static String[] split(String input) {
-		return input.split("[\\\n,]");
+		String delimitor = checkForDelimitor(input);
+		return input.split("[\\\n,"+ delimitor + "]");
+	}
+	
+	public static String checkForDelimitor(String input) {
+		String delimitor = "";
+		if(input.startsWith(DELIMITOR_INDICATOR)) {
+			delimitor = input.substring(DELIMITOR_INDICATOR.length(), input.indexOf(DELIMITOR_END));		
+		}
+		return delimitor;
 	}
 
 	public static int parse(String value) {
