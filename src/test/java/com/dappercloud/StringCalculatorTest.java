@@ -70,7 +70,7 @@ public class StringCalculatorTest {
 	}
 
 	@Test
-	public void addWithNegatveNumbersNewLineAndCommaAndCustomStringTest() throws Exception {
+	public void addWithNegatveNumbersNewLineAndCommaAndCustomStringTest(){
 		try {
 			StringCalculator.addString("//;\n5,2\n3;-2,3");
 			fail("Expected to have an exception here");
@@ -78,11 +78,10 @@ public class StringCalculatorTest {
 		} catch (Exception e) {
 			assertEquals("There should be an exception", "Negatives not allowed [-2]",e.getMessage());
 		}
-		// assertEquals("String input 5,2,3,-2,3 is 15", 15, result);
 	}
 	
 	@Test
-	public void addWithMultipleNegatveNumbersTest() throws Exception {
+	public void addWithMultipleNegatveNumbersTest(){
 		try {
 			StringCalculator.addString(",2\n3,-2,3,-6,8");
 			fail("Expected to have an exception here");
@@ -90,7 +89,29 @@ public class StringCalculatorTest {
 		} catch (Exception e) {
 			assertEquals("There should be an exception", "Negatives not allowed [-2,-6]",e.getMessage());
 		}
-		// assertEquals("String input 5,2,3,-2,3 is 15", 15, result);
+	}
+	
+	@Test
+	public void addWithNoNegatveNumbersNewLineAndCommaAndCustomStringTest(){
+		try {
+			int result = StringCalculator.addString("//;\n5,2\n3;2,3");
+			assertEquals("5+2+3+2+3", 15,result);
+
+		} catch (Exception e) {
+			fail("Do not expecte to have an exception here");
+		}
+	}
+	
+	@Test
+	public void addSkips1001NumberTest() throws Exception {
+		int result = StringCalculator.addString("//;\n5,1001\n3;2,3");
+		assertEquals("5+3+2+3", 13,result);
+	}
+	
+	@Test
+	public void addAllow1000NumbersTest() throws Exception {
+		int result = StringCalculator.addString("//;\n5,1000\n3;2,3");
+		assertEquals("5+1000+3+2+3", 1013,result);
 	}
 
 	@Test

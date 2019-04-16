@@ -8,6 +8,7 @@ public class StringCalculator {
 	
 	 private static final String DELIMITOR_INDICATOR = "//";
 	 private static final String DELIMITOR_END = "\n";
+	 private static final int ADD_LIMIT = 1000;
 
 	/**
 	 * @param input - String separated by commas
@@ -24,7 +25,9 @@ public class StringCalculator {
 		List<Integer> negatives = new ArrayList<Integer>();
 		for (String value : split(input)) {
 			int num = parse(value);
-			result += num;
+			if(num <= ADD_LIMIT) {
+				result += num;
+			}
 			if(num < 0) {
 				negatives.add(num);
 			}
