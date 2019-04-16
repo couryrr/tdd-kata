@@ -65,14 +65,14 @@ public class StringCalculatorTest {
 
 	@Test
 	public void addMultipleNumbersNewLineAndCommaAndCustomStringTest() throws Exception {
-		int result = StringCalculator.addString("//;\n5,2\n3;2,3");
+		int result = StringCalculator.addString("//[;]\n5,2\n3;2,3");
 		assertEquals("String input 5,2,3,2,3 is 15", 15, result);
 	}
 
 	@Test
 	public void addWithNegatveNumbersNewLineAndCommaAndCustomStringTest(){
 		try {
-			StringCalculator.addString("//;\n5,2\n3;-2,3");
+			StringCalculator.addString("//[;]\n5,2\n3;-2,3");
 			fail("Expected to have an exception here");
 
 		} catch (Exception e) {
@@ -94,7 +94,7 @@ public class StringCalculatorTest {
 	@Test
 	public void addWithNoNegatveNumbersNewLineAndCommaAndCustomStringTest(){
 		try {
-			int result = StringCalculator.addString("//;\n5,2\n3;2,3");
+			int result = StringCalculator.addString("//[;]\n5,2\n3;2,3");
 			assertEquals("5+2+3+2+3", 15,result);
 
 		} catch (Exception e) {
@@ -104,13 +104,13 @@ public class StringCalculatorTest {
 	
 	@Test
 	public void addSkips1001NumberTest() throws Exception {
-		int result = StringCalculator.addString("//;\n5,1001\n3;2,3");
+		int result = StringCalculator.addString("//[;]\n5,1001\n3;2,3");
 		assertEquals("5+3+2+3", 13,result);
 	}
 	
 	@Test
 	public void addAllow1000NumbersTest() throws Exception {
-		int result = StringCalculator.addString("//;\n5,1000\n3;2,3");
+		int result = StringCalculator.addString("//[;]\n5,1000\n3;2,3");
 		assertEquals("5+1000+3+2+3", 1013,result);
 	}
 
@@ -140,21 +140,21 @@ public class StringCalculatorTest {
 
 	@Test
 	public void splitEmptyStringTest() {
-		String[] result = StringCalculator.split("");
+		String[] result = StringCalculator.split("","[\\n,]");
 		assertEquals("Empty input will have a size of 1", 1, result.length);
 		assertEquals("Empty input only value will be blank", "", result[0]);
 	}
 
 	@Test
 	public void splitSingleStringTest() {
-		String[] result = StringCalculator.split("5");
+		String[] result = StringCalculator.split("5","[\\n,]");
 		assertEquals("Single input will have a size of 1", 1, result.length);
 		assertEquals("Single input only value will be it", "5", result[0]);
 	}
 
 	@Test
 	public void splitTwoStringTest() {
-		String[] result = StringCalculator.split("5,2");
+		String[] result = StringCalculator.split("5,2","[\\n,]");
 		assertEquals("Two inputs will have a size of 2", 2, result.length);
 		assertEquals("Input[0] value will be it", "5", result[0]);
 		assertEquals("Input[1] value will be it", "2", result[1]);
@@ -162,7 +162,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void splitTwoOneBlankStringTest() {
-		String[] result = StringCalculator.split("5, ");
+		String[] result = StringCalculator.split("5, ","[\\n,]");
 		assertEquals("Two inputs will have a size of 2", 2, result.length);
 		assertEquals("Input[0] value will be it", "5", result[0]);
 		assertEquals("Input[1] value will be it", " ", result[1]);
@@ -170,14 +170,14 @@ public class StringCalculatorTest {
 
 	@Test
 	public void splitTwoOneEmptyStringTest() {
-		String[] result = StringCalculator.split("25,");
+		String[] result = StringCalculator.split("25,","[\\n,]");
 		assertEquals("Two inputs will have a size of 1", 1, result.length);
 		assertEquals("Input[0] value will be it", "25", result[0]);
 	}
 
 	@Test
 	public void splitMoreThanTwoStringTest() {
-		String[] result = StringCalculator.split("25,55,16");
+		String[] result = StringCalculator.split("25,55,16","[\\n,]");
 		assertEquals("Two inputs will have a size of 3", 3, result.length);
 		assertEquals("Input[0] value will be it", "25", result[0]);
 		assertEquals("Input[1] value will be it", "55", result[1]);
@@ -186,7 +186,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void splitMoreThanTwoOneEmptyStringTest() {
-		String[] result = StringCalculator.split("25,,16");
+		String[] result = StringCalculator.split("25,,16","[\\n,]");
 		assertEquals("Two inputs will have a size of 3", 3, result.length);
 		assertEquals("Input[0] value will be it", "25", result[0]);
 		assertEquals("Input[1] value will be it", "", result[1]);
@@ -195,7 +195,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void splitWithNewLineStringTest() {
-		String[] result = StringCalculator.split("25\n16");
+		String[] result = StringCalculator.split("25\n16","[\\\n,]");
 		assertEquals("Two inputs will have a size of 2", 2, result.length);
 		assertEquals("Input[0] value will be it", "25", result[0]);
 		assertEquals("Input[1] value will be it", "16", result[1]);
@@ -203,7 +203,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void splitWithNewLineAndCommaStringTest() {
-		String[] result = StringCalculator.split("25\n16,12");
+		String[] result = StringCalculator.split("25\n16,12","[\\\n,]");
 		assertEquals("Two inputs will have a size of 3", 3, result.length);
 		assertEquals("Input[0] value will be it", "25", result[0]);
 		assertEquals("Input[1] value will be it", "16", result[1]);
@@ -212,20 +212,20 @@ public class StringCalculatorTest {
 
 	@Test
 	public void checkForDelimitorTest() {
-		String result = StringCalculator.checkForDelimitor("//;\n1;2");
-		assertEquals("Value should be ;", ";", result);
+		String result = StringCalculator.getDelimitor("//[;]\n1;2");
+		assertEquals("Value should be ;", "[\\n,]|\\Q;\\E", result);
 	}
 
 	@Test
 	public void checkForLongDelimitorTest() {
-		String result = StringCalculator.checkForDelimitor("//--\n1--2");
-		assertEquals("Value should be --", "--", result);
+		String result = StringCalculator.getDelimitor("//[--]\n1--2");
+		assertEquals("Value should be --", "[\\n,]|\\Q--\\E", result);
 	}
 
 	@Test
 	public void checkForNoDelimitorTest() {
-		String result = StringCalculator.checkForDelimitor("1,2");
-		assertEquals("Value should be blank", "", result);
+		String result = StringCalculator.getDelimitor("1,2");
+		assertEquals("Value should be base", "[\\n,]", result);
 	}
 
 }
